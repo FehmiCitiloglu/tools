@@ -371,3 +371,5 @@ export default function ColorConverter() {
     </div>
   );
 }
+
+export { ColorConverter };

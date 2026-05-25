@@ -1,7 +1,7 @@
 ---
 import { getEntry, render } from 'astro:content';
 import ToolLayout from '@layouts/ToolLayout.astro';
-import ColorConverter from '@components/tool/ColorConverter';
+import { ColorConverter as ColorConverterComponent } from '@components/tool/ColorConverter';
 import { generateToolJsonLd } from '@lib/json-ld';
 
 const entry = await getEntry('tools', 'color-converter');
@@ -30,7 +30,7 @@ const jsonLd = generateToolJsonLd({
   relatedTools={relatedTools}
   jsonLd={jsonLd}
 >
-  <ColorConverter client:load />
+  <ColorConverterComponent client:load />
 
   <div slot="about">
     <Content />
