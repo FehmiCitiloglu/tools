@@ -6,6 +6,7 @@ import { generateWebsiteJsonLd } from '@lib/json-ld';
 const tools = await getCollection('tools');
 const featuredTools = tools.filter(t => t.data.featured).slice(0, 6);
 
+const base = import.meta.env.BASE_URL;
 const siteUrl = Astro.site?.toString().replace(/\/$/, '') || 'https://devtools.example.com';
 
 const jsonLd = generateWebsiteJsonLd({
@@ -31,7 +32,7 @@ const jsonLd = generateWebsiteJsonLd({
       </p>
       <div class="flex flex-wrap gap-4 justify-center">
         <a
-          href="/tools"
+          href={`${base}tools`}
           class="px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors"
         >
           Browse All Tools
@@ -77,7 +78,7 @@ const jsonLd = generateWebsiteJsonLd({
           Featured Tools
         </h2>
         <a
-          href="/tools"
+          href={`${base}tools`}
           class="text-blue-600 dark:text-blue-400 hover:underline font-medium"
         >
           View All →
@@ -87,7 +88,7 @@ const jsonLd = generateWebsiteJsonLd({
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {featuredTools.map((tool) => (
           <a
-            href={`/tools/${tool.id}`}
+            href={`${base}tools/${tool.id}`}
             class="group block p-6 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 hover:border-blue-500 dark:hover:border-blue-400 hover:shadow-lg transition-all"
           >
             <div class="flex items-start gap-4">
@@ -119,7 +120,7 @@ const jsonLd = generateWebsiteJsonLd({
       <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
         {['Encoding', 'Formatting', 'Conversion', 'Generation', 'Security'].map((category) => (
           <a
-            href={`/tools?category=${category.toLowerCase()}`}
+            href={`${base}tools?category=${category.toLowerCase()}`}
             class="p-4 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 hover:border-blue-500 dark:hover:border-blue-400 transition-colors text-center"
           >
             <span class="font-medium text-gray-900 dark:text-white">{category}</span>

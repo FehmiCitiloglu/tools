@@ -7,7 +7,8 @@ import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://devtools.example.com',
+  site: 'https://fehmicitiloglu.github.io',
+  base: '/tools',
   output: 'static',
   integrations: [react(), mdx(), sitemap()],
   vite: {

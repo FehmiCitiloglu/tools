@@ -13,6 +13,8 @@ export interface Props {
 
 const { title, description, category, tags = [], relatedTools = [], jsonLd } = Astro.props;
 
+const base = import.meta.env.BASE_URL;
+
 const adInArticleSlot = import.meta.env.PUBLIC_ADSENSE_SLOT_TOOL_INARTICLE;
 const adFooterSlot = import.meta.env.PUBLIC_ADSENSE_SLOT_TOOL_FOOTER;
 ---
@@ -59,7 +61,7 @@ const adFooterSlot = import.meta.env.PUBLIC_ADSENSE_SLOT_TOOL_FOOTER;
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {relatedTools.map((tool) => (
             <a
-              href={`/tools/${tool}`}
+              href={`${base}tools/${tool}`}
               class="block p-4 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 hover:border-blue-500 dark:hover:border-blue-400 transition-colors"
             >
               <span class="text-blue-600 dark:text-blue-400 font-medium">{tool}</span>

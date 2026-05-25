@@ -11,6 +11,8 @@ export interface Props {
 
 const { title, description, jsonLd } = Astro.props;
 
+const base = import.meta.env.BASE_URL;
+
 // AdSense slot ID for the site-wide footer placement.
 // Set PUBLIC_ADSENSE_CLIENT (and replace this slot) to enable. Hidden otherwise.
 const FOOTER_AD_SLOT = import.meta.env.PUBLIC_ADSENSE_FOOTER_SLOT ?? '';
@@ -24,14 +26,14 @@ const FOOTER_AD_SLOT = import.meta.env.PUBLIC_ADSENSE_FOOTER_SLOT ?? '';
     <header class="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
         <nav class="flex items-center justify-between">
-          <a href="/" class="text-2xl font-bold text-blue-600 dark:text-blue-400">
+          <a href={base} class="text-2xl font-bold text-blue-600 dark:text-blue-400">
             DevTools
           </a>
           <div class="flex gap-6">
-            <a href="/tools" class="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400">
+            <a href={`${base}tools`} class="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400">
               Tools
             </a>
-            <a href="/blog" class="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400">
+            <a href={`${base}blog`} class="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400">
               Blog
             </a>
           </div>
