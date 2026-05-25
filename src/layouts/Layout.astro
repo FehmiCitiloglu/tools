@@ -1,23 +1,41 @@
+---
+import '@/styles/global.css';
+
+export interface Props {
+  title?: string;
+  description?: string;
+}
+
+const { title = 'Developer Tools', description = 'Free online developer tools and utilities' } = Astro.props;
+
+// Centralized AdSense loader. Gated by env so dev/preview without the key ships zero ad JS.
+const adsenseClient = import.meta.env.PUBLIC_ADSENSE_CLIENT;
+const adsEnabled = Boolean(adsenseClient);
+---
+
 <!doctype html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro Basics</title>
-	</head>
-	<body>
-		<slot />
-	</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" href="/favicon.ico" />
+    <meta name="generator" content={Astro.generator} />
+    {adsEnabled && (
+      <>
+        <meta name="google-adsense-account" content={adsenseClient} />
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com" crossorigin />
+        <script
+          async
+          src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${adsenseClient}`}
+          crossorigin="anonymous"
+        ></script>
+      </>
+    )}
+    <slot name="head" />
+  </head>
+  <body>
+    <slot />
+  </body>
 </html>
 
-<style>
-	html,
-	body {
-		margin: 0;
-		width: 100%;
-		height: 100%;
-	}
-</style>

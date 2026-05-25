@@ -1,0 +1,75 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import AdSlot from '@components/ads/AdSlot.astro';
+
+export interface Props {
+  title: string;
+  description: string;
+  category: string;
+  tags?: string[];
+  relatedTools?: string[];
+  jsonLd?: Record<string, any>;
+}
+
+const { title, description, category, tags = [], relatedTools = [], jsonLd } = Astro.props;
+
+const adInArticleSlot = import.meta.env.PUBLIC_ADSENSE_SLOT_TOOL_INARTICLE;
+const adFooterSlot = import.meta.env.PUBLIC_ADSENSE_SLOT_TOOL_FOOTER;
+---
+
+<BaseLayout title={title} description={description} jsonLd={jsonLd}>
+  <article class="space-y-8">
+    <!-- Tool Header -->
+    <header class="space-y-4">
+      <div class="flex flex-wrap gap-2 text-sm">
+        <span class="px-3 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-full">
+          {category}
+        </span>
+        {tags.map((tag) => (
+          <span class="px-3 py-1 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-full">
+            {tag}
+          </span>
+        ))}
+      </div>
+      <h1 class="text-4xl font-bold text-gray-900 dark:text-white">
+        {title}
+      </h1>
+      <p class="text-xl text-gray-600 dark:text-gray-400">
+        {description}
+      </p>
+    </header>
+
+    <!-- Tool Content -->
+    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6">
+      <slot />
+    </div>
+
+    <!-- In-article ad (below the tool, above the About section) -->
+    {adInArticleSlot && <AdSlot slot={adInArticleSlot} format="auto" class="my-4" />}
+
+    <!-- About Section -->
+    <div class="prose prose-gray dark:prose-invert max-w-none">
+      <slot name="about" />
+    </div>
+
+    <!-- Related Tools -->
+    {relatedTools.length > 0 && (
+      <section class="space-y-4">
+        <h2 class="text-2xl font-bold text-gray-900 dark:text-white">Related Tools</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {relatedTools.map((tool) => (
+            <a
+              href={`/tools/${tool}`}
+              class="block p-4 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 hover:border-blue-500 dark:hover:border-blue-400 transition-colors"
+            >
+              <span class="text-blue-600 dark:text-blue-400 font-medium">{tool}</span>
+            </a>
+          ))}
+        </div>
+      </section>
+    )}
+
+    <!-- Footer ad (below related tools) -->
+    {adFooterSlot && <AdSlot slot={adFooterSlot} format="auto" class="mt-8" />}
+  </article>
+</BaseLayout>

@@ -1,0 +1,63 @@
+---
+title: 'Unix Timestamp Converter'
+description: 'Convert Unix timestamps to human-readable dates and vice versa. Free timestamp converter with ISO 8601, local time, and UTC support.'
+category: 'conversion'
+tags: ['timestamp', 'unix', 'date', 'time', 'converter']
+keywords: ['unix timestamp converter', 'epoch converter', 'timestamp to date', 'date to timestamp', 'unix time', 'epoch time', 'iso 8601']
+icon: '⏰'
+relatedTools: ['uuid-generator', 'json-formatter-validator']
+publishedAt: 2026-05-25
+updatedAt: 2026-05-25
+featured: true
+---
+
+## About Unix Timestamp Converter
+
+Convert between Unix timestamps (epoch time) and human-readable dates. Works with seconds and milliseconds timestamps, supports local and UTC time zones.
+
+### Key Features
+
+- **Bidirectional Conversion**: Timestamp to date and date to timestamp
+- **Multiple Formats**: Unix seconds, milliseconds, ISO 8601, local time
+- **Current Time**: Quick access to current timestamp
+- **Timezone Support**: View in local time or UTC
+- **Real-time Updates**: Live display of current time
+- **Copy to Clipboard**: One-click copying of any format
+
+### Common Use Cases
+
+- Debug API timestamp fields
+- Convert database timestamps
+- Test date/time logic
+- Understand Unix epoch time
+- Convert between timezones
+
+### What is a Unix Timestamp?
+
+A Unix timestamp (or epoch time) is the number of seconds that have elapsed since:
+**January 1, 1970, 00:00:00 UTC** (the Unix epoch)
+
+**Seconds**: `1577836800` → January 1, 2020
+**Milliseconds**: `1577836800000` → January 1, 2020
+
+### Supported Formats
+
+- **Unix Seconds**: Standard Unix timestamp (10 digits)
+- **Unix Milliseconds**: JavaScript-style timestamp (13 digits)
+- **ISO 8601**: `2020-01-01T00:00:00.000Z`
+- **Local Time**: Your timezone's human-readable format
+- **UTC**: Coordinated Universal Time format
+
+### FAQ
+
+**What's the difference between seconds and milliseconds timestamps?**
+Seconds: Used by Unix/Linux systems (10 digits). Milliseconds: Used by JavaScript and some APIs (13 digits, 1000x larger).
+
+**Why does my timestamp have more digits?**
+10 digits = seconds, 13 digits = milliseconds. Add three zeros to seconds to get milliseconds.
+
+**What happens in 2038?**
+The Year 2038 problem affects 32-bit systems when timestamps exceed 2,147,483,647. Modern 64-bit systems aren't affected.
+
+**How do I convert my local time to UTC?**
+Use the conversion tool below - it automatically shows both local and UTC representations.

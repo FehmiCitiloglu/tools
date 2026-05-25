@@ -1,0 +1,62 @@
+---
+title: 'JWT Decoder & Inspector'
+description: 'Decode and inspect JSON Web Tokens (JWT) online. Free JWT decoder showing header, payload, and signature with validation and Base64 decoding.'
+category: 'security'
+tags: ['jwt', 'decoder', 'json-web-token', 'authentication']
+keywords: ['jwt decoder', 'decode jwt', 'jwt inspector', 'json web token decoder', 'jwt debugger', 'jwt parser', 'jwt online']
+icon: '🔐'
+relatedTools: ['base64-encoder-decoder', 'json-formatter-validator']
+publishedAt: 2026-05-25
+updatedAt: 2026-05-25
+featured: true
+---
+
+## About JWT Decoder & Inspector
+
+A JSON Web Token (JWT) decoder that helps you inspect and debug JWTs. View the header, payload, and signature of any JWT token in a readable format.
+
+### Key Features
+
+- **Decode JWT Tokens**: Parse and display JWT structure
+- **Three-Part Display**: Separate views for header, payload, and signature
+- **JSON Formatting**: Pretty-printed JSON for easy reading
+- **Base64 Decoding**: Automatically decodes Base64-encoded sections
+- **Copy Individual Parts**: Copy header, payload, or full decoded token
+- **No Data Storage**: All processing happens locally in your browser
+- **No Verification**: This tool decodes but doesn't verify signatures
+
+### Common Use Cases
+
+- Debug JWT tokens from authentication systems
+- Inspect JWT claims and expiration times
+- Understand JWT structure and format
+- Extract user data from JWT payloads
+- Learn about JWT token composition
+
+### JWT Structure
+
+A JWT consists of three Base64-encoded parts separated by dots (`.`):
+
+1. **Header**: Algorithm and token type
+2. **Payload**: Claims (user data, expiration, etc.)
+3. **Signature**: Cryptographic signature for verification
+
+Example: `xxxxx.yyyyy.zzzzz`
+
+### Security Notice
+
+⚠️ **Important**: This tool only decodes JWTs. It does NOT verify signatures or validate tokens. Anyone can decode a JWT - they're not encrypted. Never include sensitive data in JWT payloads.
+
+### FAQ
+
+**Does this tool verify JWT signatures?**
+No, this is a decoder only. It displays the JWT contents but doesn't validate authenticity. Use a proper JWT library for verification.
+
+**Can I decode expired JWTs?**
+Yes! Expiration is just a claim in the payload. This tool shows all JWT content regardless of expiration.
+
+**Is my JWT secure if it can be decoded?**
+JWTs are encoded, not encrypted. Anyone can decode them. Security comes from signature verification, not obscurity.
+
+**What if my JWT won't decode?**
+Ensure your JWT has three parts separated by dots. Some systems add prefixes like `Bearer ` - remove those first.

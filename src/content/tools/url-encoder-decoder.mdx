@@ -1,0 +1,56 @@
+---
+title: 'URL Encoder & Decoder'
+description: 'Encode and decode URL strings online. Free URL converter with component and full URL encoding, perfect for query parameters and API development.'
+category: 'encoding'
+tags: ['url', 'encoder', 'decoder', 'percent-encoding']
+keywords: ['url encode', 'url decode', 'percent encode', 'uri encode', 'encode url online', 'decode url', 'url converter', 'query string encoder']
+icon: '🔗'
+relatedTools: ['base64-encoder-decoder', 'json-formatter-validator']
+publishedAt: 2026-05-25
+updatedAt: 2026-05-25
+featured: true
+---
+
+## About URL Encoder & Decoder
+
+URL encoding (also called percent-encoding) converts characters into a format that can be safely transmitted over the internet. This tool helps you encode text for URLs or decode URL-encoded strings.
+
+### Key Features
+
+- **Bidirectional Conversion**: Encode to URL format or decode URL strings
+- **Component vs Full URL**: Choose between encoding URL components or full URLs
+- **Real-time Conversion**: Instant results as you type
+- **Copy to Clipboard**: One-click copying of encoded/decoded output
+- **UTF-8 Support**: Handles all Unicode characters
+- **No Data Storage**: All processing happens locally in your browser
+
+### Common Use Cases
+
+- Encode query parameters for URLs
+- Decode URL parameters from browser address bar
+- Prepare form data for HTTP requests
+- Debug API endpoint URLs
+- Encode special characters in URLs
+
+### Encoding Types
+
+**Component Encoding** (`encodeURIComponent`):
+- Encodes all special characters except: `A-Z a-z 0-9 - _ . ! ~ * ' ( )`
+- Use for encoding values in query strings and path segments
+- Example: `hello world` → `hello%20world`
+
+**Full URL Encoding** (`encodeURI`):
+- Preserves URL structure characters: `: / ? # [ ] @ ! $ & ' ( ) * + , ; =`
+- Use for encoding complete URLs
+- Example: `https://example.com/path?q=hello world` → `https://example.com/path?q=hello%20world`
+
+### FAQ
+
+**What's the difference between component and full URL encoding?**
+Component encoding is stricter and encodes more characters. Use it for query parameters. Full URL encoding preserves URL structure.
+
+**Why do I see `%20` instead of `+` for spaces?**
+Both are valid, but `%20` is the standard percent-encoding format. The `+` is specific to `application/x-www-form-urlencoded` format.
+
+**Is URL encoding secure?**
+URL encoding is for data formatting, not security. It doesn't encrypt or hide data. Don't use it for sensitive information.

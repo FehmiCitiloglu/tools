@@ -1,0 +1,38 @@
+---
+import { getEntry, render } from 'astro:content';
+import ToolLayout from '@layouts/ToolLayout.astro';
+import JsonFormatter from '@components/tool/JsonFormatter';
+import { generateToolJsonLd } from '@lib/json-ld';
+
+const entry = await getEntry('tools', 'json-formatter-validator');
+if (!entry) throw new Error('Tool not found');
+
+const { Content } = await render(entry);
+const { title, description, category, tags, relatedTools, keywords } = entry.data;
+
+const siteUrl = Astro.site?.toString().replace(/\/$/, '') || 'https://devtools.example.com';
+const toolUrl = `${siteUrl}${Astro.url.pathname}`;
+
+const jsonLd = generateToolJsonLd({
+  name: title,
+  description,
+  url: toolUrl,
+  category,
+  keywords,
+});
+---
+
+<ToolLayout
+  title={title}
+  description={description}
+  category={category}
+  tags={tags}
+  relatedTools={relatedTools}
+  jsonLd={jsonLd}
+>
+  <JsonFormatter client:load />
+
+  <div slot="about">
+    <Content />
+  </div>
+</ToolLayout>

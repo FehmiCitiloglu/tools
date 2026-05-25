@@ -1,11 +1,131 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+import BaseLayout from '@layouts/BaseLayout.astro';
+import { generateWebsiteJsonLd } from '@lib/json-ld';
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+const tools = await getCollection('tools');
+const featuredTools = tools.filter(t => t.data.featured).slice(0, 6);
+
+const siteUrl = Astro.site?.toString().replace(/\/$/, '') || 'https://devtools.example.com';
+
+const jsonLd = generateWebsiteJsonLd({
+  name: 'DevTools - Free Developer Utilities',
+  url: siteUrl,
+  description: 'Free online developer tools and utilities for web developers. JSON formatter, Base64 encoder, URL encoder, JWT decoder, and more.',
+});
 ---
 
-<Layout>
-	<Welcome />
-</Layout>
+<BaseLayout
+  title="DevTools - Free Online Developer Utilities"
+  description="Free online developer tools and utilities for web developers. JSON formatter, Base64 encoder, URL encoder, JWT decoder, and more."
+  jsonLd={jsonLd}
+>
+  <div class="space-y-16">
+    <!-- Hero Section -->
+    <section class="text-center space-y-6 py-12">
+      <h1 class="text-5xl font-bold text-gray-900 dark:text-white">
+        Free Developer Tools
+      </h1>
+      <p class="text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+        Essential online utilities for developers. Fast, secure, and completely free. All tools run locally in your browser.
+      </p>
+      <div class="flex flex-wrap gap-4 justify-center">
+        <a
+          href="/tools"
+          class="px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors"
+        >
+          Browse All Tools
+        </a>
+        <a
+          href="#featured"
+          class="px-8 py-3 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-900 dark:text-white font-medium rounded-lg border border-gray-200 dark:border-gray-700 transition-colors"
+        >
+          See Featured
+        </a>
+      </div>
+    </section>
+
+    <!-- Features -->
+    <section class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div class="text-center space-y-3">
+        <div class="text-4xl">🚀</div>
+        <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Fast & Lightweight</h3>
+        <p class="text-sm text-gray-600 dark:text-gray-400">
+          No installation required. All tools load instantly and run in your browser.
+        </p>
+      </div>
+      <div class="text-center space-y-3">
+        <div class="text-4xl">🔒</div>
+        <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Private & Secure</h3>
+        <p class="text-sm text-gray-600 dark:text-gray-400">
+          Your data never leaves your device. Everything is processed locally.
+        </p>
+      </div>
+      <div class="text-center space-y-3">
+        <div class="text-4xl">💯</div>
+        <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Always Free</h3>
+        <p class="text-sm text-gray-600 dark:text-gray-400">
+          No limits, no sign-up, no tracking. Just tools that work.
+        </p>
+      </div>
+    </section>
+
+    <!-- Featured Tools -->
+    <section id="featured" class="space-y-6">
+      <div class="flex justify-between items-center">
+        <h2 class="text-3xl font-bold text-gray-900 dark:text-white">
+          Featured Tools
+        </h2>
+        <a
+          href="/tools"
+          class="text-blue-600 dark:text-blue-400 hover:underline font-medium"
+        >
+          View All →
+        </a>
+      </div>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {featuredTools.map((tool) => (
+          <a
+            href={`/tools/${tool.id}`}
+            class="group block p-6 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 hover:border-blue-500 dark:hover:border-blue-400 hover:shadow-lg transition-all"
+          >
+            <div class="flex items-start gap-4">
+              {tool.data.icon && (
+                <span class="text-3xl">{tool.data.icon}</span>
+              )}
+              <div class="flex-1 min-w-0">
+                <h3 class="text-lg font-semibold text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                  {tool.data.title}
+                </h3>
+                <p class="mt-2 text-sm text-gray-600 dark:text-gray-400 line-clamp-2">
+                  {tool.data.description}
+                </p>
+                <span class="mt-3 inline-block px-2 py-1 text-xs bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded capitalize">
+                  {tool.data.category}
+                </span>
+              </div>
+            </div>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <!-- Categories -->
+    <section class="space-y-6">
+      <h2 class="text-3xl font-bold text-gray-900 dark:text-white">
+        Tool Categories
+      </h2>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        {['Encoding', 'Formatting', 'Conversion', 'Generation', 'Security'].map((category) => (
+          <a
+            href={`/tools?category=${category.toLowerCase()}`}
+            class="p-4 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 hover:border-blue-500 dark:hover:border-blue-400 transition-colors text-center"
+          >
+            <span class="font-medium text-gray-900 dark:text-white">{category}</span>
+          </a>
+        ))}
+      </div>
+    </section>
+  </div>
+</BaseLayout>

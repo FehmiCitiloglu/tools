@@ -1,5 +1,26 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
+import tailwindcss from '@tailwindcss/vite';
+import react from '@astrojs/react';
+import mdx from '@astrojs/mdx';
+import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
-export default defineConfig({});
+export default defineConfig({
+  site: 'https://devtools.example.com',
+  output: 'static',
+  integrations: [react(), mdx(), sitemap()],
+  vite: {
+    plugins: [tailwindcss()],
+    resolve: {
+      alias: {
+        '@': '/src',
+        '@components': '/src/components',
+        '@layouts': '/src/layouts',
+        '@content': '/src/content',
+        '@lib': '/src/lib',
+        '@assets': '/src/assets'
+      }
+    }
+  }
+});

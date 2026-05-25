@@ -1,0 +1,45 @@
+@import "tailwindcss";
+
+/* CSS Custom Properties for theming */
+:root {
+  --color-primary: 59 130 246;
+  --color-secondary: 139 92 246;
+  --color-accent: 34 197 94;
+  --color-background: 255 255 255;
+  --color-surface: 249 250 251;
+  --color-text: 17 24 39;
+  --color-text-secondary: 107 114 128;
+  --color-border: 229 231 235;
+}
+
+.dark {
+  --color-background: 17 24 39;
+  --color-surface: 31 41 55;
+  --color-text: 243 244 246;
+  --color-text-secondary: 156 163 175;
+  --color-border: 55 65 81;
+}
+
+/* Base styles */
+* {
+  @apply border-gray-200 dark:border-gray-700;
+}
+
+body {
+  @apply bg-white text-gray-900 dark:bg-gray-900 dark:text-gray-100;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+}
+
+/* Focus styles for accessibility */
+*:focus-visible {
+  @apply outline-none ring-2 ring-blue-500 ring-offset-2 dark:ring-offset-gray-900;
+}
+
+/* Code blocks */
+code {
+  @apply px-1.5 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-sm font-mono;
+}
+
+pre code {
+  @apply px-0 py-0 bg-transparent;
+}

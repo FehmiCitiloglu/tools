@@ -1,0 +1,65 @@
+---
+title: 'UUID Generator (v4)'
+description: 'Generate random UUIDs (Universally Unique Identifiers) online. Free UUID v4 generator with bulk generation and one-click copying.'
+category: 'generation'
+tags: ['uuid', 'guid', 'random', 'identifier']
+keywords: ['uuid generator', 'generate uuid', 'uuid v4', 'guid generator', 'random uuid', 'unique identifier', 'uuid online']
+icon: '🆔'
+relatedTools: ['hash-generator', 'base64-encoder-decoder']
+publishedAt: 2026-05-25
+updatedAt: 2026-05-25
+featured: true
+---
+
+## About UUID Generator
+
+Generate random UUIDs (Universally Unique Identifiers) for databases, APIs, and distributed systems. This tool uses the browser's cryptographically secure random number generator.
+
+### Key Features
+
+- **UUID v4**: Generates random UUIDs using crypto.randomUUID()
+- **Bulk Generation**: Generate up to 100 UUIDs at once
+- **Copy Individual or All**: Copy single UUIDs or all at once
+- **Hyphen Toggle**: Show UUIDs with or without hyphens
+- **Uppercase/Lowercase**: Format options for your use case
+- **Cryptographically Secure**: Uses Web Crypto API for true randomness
+
+### Common Use Cases
+
+- Generate database primary keys
+- Create unique session identifiers
+- Generate API request IDs
+- Create unique filenames
+- Distributed system identifiers
+
+### What is a UUID?
+
+A UUID (Universally Unique Identifier) is a 128-bit number used to uniquely identify information. The standard format is:
+
+`xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx`
+
+Where:
+- `x` is a random hexadecimal digit (0-9, a-f)
+- The `4` indicates UUID version 4 (random)
+- `y` is one of: 8, 9, a, or b (variant bits)
+
+### UUID v4 Details
+
+Version 4 UUIDs are randomly generated with 122 random bits. The probability of a collision is approximately:
+
+- **1 in 2.71 quintillion** for the first collision in 1 billion UUIDs
+- Effectively impossible in practice for most applications
+
+### FAQ
+
+**Are these UUIDs truly unique?**
+While not mathematically guaranteed, the probability of collision is so low that UUIDs are considered unique for practical purposes.
+
+**What's the difference between UUID and GUID?**
+They're essentially the same. GUID (Globally Unique Identifier) is Microsoft's term for UUID.
+
+**Can I use these UUIDs in databases?**
+Yes! Many databases support UUID types. However, be aware that random UUIDs can impact index performance compared to sequential IDs.
+
+**Which format should I use?**
+Most systems use lowercase with hyphens: `550e8400-e29b-41d4-a716-446655440000`

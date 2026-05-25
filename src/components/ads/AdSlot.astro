@@ -1,0 +1,56 @@
+---
+/**
+ * Google AdSense ad unit slot.
+ *
+ * Renders nothing unless `PUBLIC_ADSENSE_CLIENT` is set, so dev/preview ship zero ad markup.
+ * The loader script lives in `Layout.astro` — this component only emits the `<ins>` placeholder
+ * plus the per-slot `adsbygoogle.push({})` activation call (the one inline script AdSense requires).
+ *
+ * Usage:
+ *   <AdSlot slot="1234567890" />
+ *   <AdSlot slot="1234567890" format="rectangle" responsive={false} class="my-8" />
+ */
+export interface Props {
+  /** AdSense ad unit slot ID (configured in your AdSense dashboard). */
+  slot: string;
+  /** AdSense `data-ad-format`. Defaults to `auto` (responsive). */
+  format?: 'auto' | 'rectangle' | 'horizontal' | 'vertical' | 'fluid';
+  /** Whether the unit should be responsive. Defaults to `true`. */
+  responsive?: boolean;
+  /** Optional layout key for in-article / in-feed units. */
+  layout?: string;
+  /** Extra Tailwind classes for the wrapper. */
+  class?: string;
+}
+
+const {
+  slot,
+  format = 'auto',
+  responsive = true,
+  layout,
+  class: className = '',
+} = Astro.props;
+
+const adsenseClient = import.meta.env.PUBLIC_ADSENSE_CLIENT;
+const adsEnabled = Boolean(adsenseClient);
+---
+
+{adsEnabled && (
+  <aside
+    class:list={['ad-slot block w-full overflow-hidden text-center', className]}
+    aria-label="Advertisement"
+  >
+    <ins
+      class="adsbygoogle block"
+      style="display:block"
+      data-ad-client={adsenseClient}
+      data-ad-slot={slot}
+      data-ad-format={format}
+      data-ad-layout={layout}
+      data-full-width-responsive={responsive ? 'true' : 'false'}
+    ></ins>
+    <script is:inline>
+      (window.adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </aside>
+)}
