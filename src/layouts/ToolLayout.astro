@@ -8,7 +8,7 @@ export interface Props {
   category: string;
   tags?: string[];
   relatedTools?: string[];
-  jsonLd?: Record<string, any>;
+  jsonLd?: Record<string, unknown>;
 }
 
 const { title, description, category, tags = [], relatedTools = [], jsonLd } = Astro.props;

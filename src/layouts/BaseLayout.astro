@@ -6,10 +6,28 @@ import AdSlot from '@components/ads/AdSlot.astro';
 export interface Props {
   title: string;
   description: string;
-  jsonLd?: Record<string, any>;
+  canonical?: string;
+  ogImage?: string;
+  ogType?: 'website' | 'article';
+  publishedAt?: Date;
+  updatedAt?: Date;
+  author?: string;
+  tags?: string[];
+  jsonLd?: Record<string, unknown>;
 }
 
-const { title, description, jsonLd } = Astro.props;
+const {
+  title,
+  description,
+  canonical,
+  ogImage,
+  ogType,
+  publishedAt,
+  updatedAt,
+  author,
+  tags = [],
+  jsonLd,
+} = Astro.props;
 
 const rawBase = import.meta.env.BASE_URL;
 const base = rawBase.endsWith('/') ? rawBase : `${rawBase}/`;
@@ -20,7 +38,19 @@ const FOOTER_AD_SLOT = import.meta.env.PUBLIC_ADSENSE_FOOTER_SLOT ?? '';
 ---
 
 <Layout title={title} description={description}>
-  <SEO title={title} description={description} jsonLd={jsonLd} slot="head" />
+  <SEO
+    title={title}
+    description={description}
+    canonical={canonical}
+    ogImage={ogImage}
+    ogType={ogType}
+    publishedAt={publishedAt}
+    updatedAt={updatedAt}
+    author={author}
+    tags={tags}
+    jsonLd={jsonLd}
+    slot="head"
+  />
   
   <div class="min-h-screen bg-gray-50 dark:bg-gray-900">
     <!-- Header -->

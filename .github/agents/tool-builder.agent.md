@@ -2,7 +2,7 @@
 description: "Use when adding a new developer utility (JSON formatter, JWT decoder, Base64, regex tester, UUID, hash, timestamp converter, color tools, markdown/HTML preview, SQL/CURL/diff/lorem, API builder, etc.) to this Astro platform. Scaffolds a tool page under src/pages/tools/ that follows the project's SEO, performance, and shared tool-wrapper conventions. Do NOT use for blog posts, comparison pages, layout/navigation work, deployment, or analytics."
 name: "Tool Builder"
 tools: [read, search, edit, todo, execute]
-model: ["Claude Opus 4.7 (copilot)", "GPT-5 (copilot)"]
+model: ["Claude Opus 4.7 (copilot)", "GPT-5.5 (copilot)"]
 argument-hint: "Name of the tool to build (e.g. 'JWT Decoder')"
 user-invocable: true
 ---

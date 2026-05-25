@@ -1,0 +1,88 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '@layouts/BaseLayout.astro';
+import { generateBreadcrumbJsonLd, generateJsonLdGraph, generateWebsiteJsonLd } from '@lib/json-ld';
+
+const posts = await getCollection('blog');
+const sortedPosts = posts.sort((a, b) => b.data.publishedAt.getTime() - a.data.publishedAt.getTime());
+const featuredPosts = sortedPosts.filter((post) => post.data.featured);
+
+const siteUrl = Astro.site?.toString().replace(/\/$/, '') || 'https://devtools.example.com';
+const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
+
+const title = 'Developer Tools Blog';
+const description = 'Practical guides for web developers using JSON, encoding, hashing, timestamps, JWTs, and browser-based utilities safely.';
+
+const jsonLd = generateJsonLdGraph([
+  generateWebsiteJsonLd({
+    name: title,
+    url: `${siteUrl}${base}blog/`,
+    description,
+  }),
+  generateBreadcrumbJsonLd([
+    { name: 'Home', url: `${siteUrl}${base}` },
+    { name: 'Blog', url: `${siteUrl}${base}blog/` },
+  ]),
+]);
+
+const formatDate = (date: Date) =>
+  new Intl.DateTimeFormat('en', { month: 'short', day: 'numeric', year: 'numeric' }).format(date);
+---
+
+<BaseLayout title={title} description={description} jsonLd={jsonLd}>
+  <div class="space-y-10">
+    <header class="max-w-3xl space-y-4">
+      <h1 class="text-4xl font-bold text-gray-900 dark:text-white">Developer Tools Blog</h1>
+      <p class="text-xl leading-8 text-gray-600 dark:text-gray-300">
+        Practical notes on debugging data, working with browser-safe utilities, and building faster developer workflows.
+      </p>
+    </header>
+
+    {featuredPosts.length > 0 && (
+      <section class="space-y-4" aria-labelledby="featured-posts">
+        <h2 id="featured-posts" class="text-2xl font-bold text-gray-900 dark:text-white">Featured</h2>
+        <div class="grid gap-6 md:grid-cols-2">
+          {featuredPosts.map((post) => (
+            <a
+              href={`${base}blog/${post.id}`}
+              class="block rounded-lg border border-gray-200 bg-white p-6 transition-all hover:border-blue-500 hover:shadow-lg dark:border-gray-700 dark:bg-gray-800 dark:hover:border-blue-400"
+            >
+              <div class="flex flex-wrap gap-2">
+                {post.data.tags.slice(0, 3).map((tag) => (
+                  <span class="rounded bg-blue-100 px-2 py-1 text-xs font-medium text-blue-800 dark:bg-blue-900 dark:text-blue-200">{tag}</span>
+                ))}
+              </div>
+              <h3 class="mt-4 text-xl font-semibold text-gray-900 dark:text-white">{post.data.title}</h3>
+              <p class="mt-3 text-sm leading-6 text-gray-600 dark:text-gray-400">{post.data.description}</p>
+              <p class="mt-4 text-sm text-gray-500 dark:text-gray-400">{formatDate(post.data.publishedAt)}</p>
+            </a>
+          ))}
+        </div>
+      </section>
+    )}
+
+    <section class="space-y-4" aria-labelledby="latest-posts">
+      <h2 id="latest-posts" class="text-2xl font-bold text-gray-900 dark:text-white">Latest Posts</h2>
+      <div class="divide-y divide-gray-200 rounded-lg border border-gray-200 bg-white dark:divide-gray-700 dark:border-gray-700 dark:bg-gray-800">
+        {sortedPosts.map((post) => (
+          <a href={`${base}blog/${post.id}`} class="block p-6 transition-colors hover:bg-gray-50 dark:hover:bg-gray-700">
+            <div class="flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
+              <div class="space-y-2">
+                <h3 class="text-lg font-semibold text-gray-900 dark:text-white">{post.data.title}</h3>
+                <p class="text-sm leading-6 text-gray-600 dark:text-gray-400">{post.data.description}</p>
+                <div class="flex flex-wrap gap-2">
+                  {post.data.tags.map((tag) => (
+                    <span class="rounded bg-gray-100 px-2 py-1 text-xs text-gray-700 dark:bg-gray-900 dark:text-gray-300">{tag}</span>
+                  ))}
+                </div>
+              </div>
+              <time class="shrink-0 text-sm text-gray-500 dark:text-gray-400" datetime={post.data.publishedAt.toISOString()}>
+                {formatDate(post.data.publishedAt)}
+              </time>
+            </div>
+          </a>
+        ))}
+      </div>
+    </section>
+  </div>
+</BaseLayout>

@@ -20,12 +20,14 @@ const toolsCollection = defineCollection({
 const blogCollection = defineCollection({
   loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/blog' }),
   schema: z.object({
-    title: z.string().max(70),
-    description: z.string().min(50).max(200),
+    title: z.string().max(60),
+    description: z.string().min(140).max(160),
     author: z.string(),
     publishedAt: z.date(),
     updatedAt: z.date().optional(),
     tags: z.array(z.string()),
+    coverImage: z.string().optional(),
+    relatedPosts: z.array(z.string()).default([]),
     featured: z.boolean().default(false),
   }),
 });

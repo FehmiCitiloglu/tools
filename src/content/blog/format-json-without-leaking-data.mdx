@@ -1,0 +1,100 @@
+---
+title: 'Format JSON Without Leaking Data'
+description: 'Learn a practical workflow for formatting, validating, redacting, and sharing JSON safely without sending API payloads or secrets to remote services.'
+author: 'DevTools Team'
+publishedAt: 2026-05-25
+updatedAt: 2026-05-25
+tags: ['json', 'privacy', 'debugging', 'api']
+coverImage: '/og-image.svg'
+relatedPosts: []
+featured: true
+---
+
+## Why local JSON formatting matters
+
+JSON is easy to paste into the first formatter you find, especially when a production incident is moving fast. The risky part is that API responses often contain bearer tokens, customer identifiers, internal URLs, email addresses, feature flags, or webhook secrets. If a formatter sends that payload to a server, the debugging shortcut can become a data handling problem.
+
+A safer workflow is simple: format and validate JSON in the browser, remove sensitive fields before sharing, and keep the raw payload out of screenshots and tickets unless it is truly required.
+
+## A safe formatting workflow
+
+Start by copying only the JSON object or array you need to inspect. Avoid copying full logs when one response body or configuration block will answer the question.
+
+Open the [JSON Formatter & Validator](/tools/json-formatter-validator), paste the payload, and format it with two-space indentation. The structure should become easy to scan without changing the values.
+
+Before you share anything, redact fields that can identify a person, account, token, host, or secret. Keep the shape of the data intact so another developer can still reproduce the issue.
+
+```json
+{
+  "userId": "redacted-user-id",
+  "email": "redacted@example.com",
+  "accessToken": "redacted-token",
+  "plan": "team",
+  "features": ["audit-log", "sso"]
+}
+```
+
+Validate the redacted version after editing it. Manual redaction can leave dangling commas, mismatched braces, or invalid string escapes, and those syntax errors create noise when someone else tries to help.
+
+## What to redact before sharing JSON
+
+Treat the following fields as sensitive by default:
+
+- Authentication data: access tokens, refresh tokens, API keys, cookies, signed URLs, session IDs.
+- Personal data: names, email addresses, phone numbers, account IDs, billing IDs, IP addresses.
+- Infrastructure details: internal hosts, private service names, database names, queue names, region-specific endpoints.
+- Business-sensitive values: pricing, contract terms, feature flags, experiment names, customer-specific limits.
+
+The goal is not to make the JSON meaningless. Preserve field names, data types, array lengths, enum values when they are not sensitive, and nested structure. That gives reviewers enough signal to debug serialization, validation, or rendering issues.
+
+## Validate before you debug behavior
+
+When an application rejects JSON, separate syntax problems from schema problems. A formatter can tell you whether the payload is valid JSON, but it cannot know whether your API expects `createdAt` as an ISO string, Unix timestamp, or nullable field.
+
+Use this order:
+
+1. Confirm the payload parses as JSON.
+2. Check whether numbers, booleans, arrays, and nulls have the expected types.
+3. Compare required fields against the API contract.
+4. Reproduce the request with the smallest redacted payload that still fails.
+
+That sequence keeps you from chasing application bugs when the payload is actually malformed.
+
+## Common JSON formatting mistakes
+
+The most common mistake is pasting JavaScript object literals instead of JSON. JSON requires quoted property names and does not allow comments, trailing commas, `undefined`, `NaN`, or single-quoted strings.
+
+```js
+// JavaScript object literal, not valid JSON
+{
+  userId: '123',
+  enabled: true,
+}
+```
+
+The valid JSON version is stricter:
+
+```json
+{
+  "userId": "123",
+  "enabled": true
+}
+```
+
+Another mistake is minifying too early. Minified JSON is useful for transport, but formatted JSON is better for review. Keep the readable version while debugging, then minify only when you need to test byte size or copy a compact fixture.
+
+## Browser-based tools are a good default
+
+Local browser tools are useful because they avoid unnecessary network hops for sensitive payloads. They are not a substitute for your company's data handling policy, but they are a strong default for day-to-day debugging.
+
+Use local formatting when you need to inspect structure, validate syntax, redact a sample, or prepare a fixture. Use repository tests, API schemas, or contract tests when you need to prove behavior.
+
+## Quick checklist
+
+- Format the smallest useful payload.
+- Redact secrets, identifiers, and private infrastructure details.
+- Validate the redacted JSON before sharing it.
+- Preserve field names, nesting, and data types where possible.
+- Link to the tool or reproduction steps instead of attaching raw production data.
+
+With that routine, JSON debugging stays fast without turning every pasted payload into a privacy gamble.

@@ -8,7 +8,8 @@ export interface Props {
 
 const { title = 'Developer Tools', description = 'Free online developer tools and utilities' } = Astro.props;
 
-const base = import.meta.env.BASE_URL;
+const rawBase = import.meta.env.BASE_URL;
+const base = rawBase.endsWith('/') ? rawBase : `${rawBase}/`;
 
 // Centralized AdSense loader. Gated by env so dev/preview without the key ships zero ad JS.
 const adsenseClient = import.meta.env.PUBLIC_ADSENSE_CLIENT;

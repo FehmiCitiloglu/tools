@@ -9,14 +9,14 @@ export interface Props {
   updatedAt?: Date;
   author?: string;
   tags?: string[];
-  jsonLd?: Record<string, any>;
+  jsonLd?: Record<string, unknown>;
 }
 
 const {
   title,
   description,
   canonical,
-  ogImage = '/og-image.png',
+  ogImage = '/og-image.svg',
   ogType = 'website',
   publishedAt,
   updatedAt,
@@ -27,7 +27,9 @@ const {
 
 const siteUrl = Astro.site?.toString().replace(/\/$/, '') || 'https://devtools.example.com';
 const canonicalUrl = canonical || `${siteUrl}${Astro.url.pathname}`;
-const fullOgImage = ogImage.startsWith('http') ? ogImage : `${siteUrl}${ogImage}`;
+const rawBase = import.meta.env.BASE_URL;
+const base = rawBase.endsWith('/') ? rawBase : `${rawBase}/`;
+const fullOgImage = ogImage.startsWith('http') ? ogImage : `${siteUrl}${base}${ogImage.replace(/^\//, '')}`;
 ---
 
 <!-- Primary Meta Tags -->

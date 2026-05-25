@@ -2,7 +2,7 @@
 description: "Use when creating structured comparison pages (React vs Vue, MongoDB vs PostgreSQL, Next.js vs Astro, etc.) for this Astro platform. Scaffolds MDX content for src/content/comparisons/ with feature tables, pros/cons, use-case recommendations, FAQ sections, and schema markup. Do NOT use for developer tools, blog posts, layout/navigation work, deployment, or analytics."
 name: "Comparison Builder"
 tools: [read, search, edit, todo, execute]
-model: ["Claude Opus 4.7 (copilot)", "GPT-5 (copilot)"]
+model: ["Claude Opus 4.7 (copilot)", "GPT-5.5 (copilot)"]
 argument-hint: "Comparison topic (e.g. 'React vs Vue')"
 user-invocable: true
 ---

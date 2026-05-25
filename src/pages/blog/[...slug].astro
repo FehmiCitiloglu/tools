@@ -1,0 +1,66 @@
+---
+import { getCollection, render } from 'astro:content';
+import ArticleLayout from '@layouts/ArticleLayout.astro';
+import { generateBlogPostJsonLd, generateBreadcrumbJsonLd, generateJsonLdGraph } from '@lib/json-ld';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+
+  return posts.map((post) => ({
+    params: { slug: post.id },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+
+const siteUrl = Astro.site?.toString().replace(/\/$/, '') || 'https://devtools.example.com';
+const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
+const postUrl = `${siteUrl}${base}blog/${post.id}/`;
+const coverImage = post.data.coverImage ?? '/og-image.svg';
+const fullCoverImage = coverImage.startsWith('http') ? coverImage : `${siteUrl}${base}${coverImage.replace(/^\//, '')}`;
+
+const allPosts = await getCollection('blog');
+const relatedPostIds = post.data.relatedPosts ?? [];
+const relatedPosts = allPosts
+  .filter((candidate) => relatedPostIds.includes(candidate.id))
+  .map((candidate) => ({
+    title: candidate.data.title,
+    description: candidate.data.description,
+    href: `${base}blog/${candidate.id}`,
+  }));
+
+const jsonLd = generateJsonLdGraph([
+  generateBlogPostJsonLd({
+    title: post.data.title,
+    description: post.data.description,
+    url: postUrl,
+    author: post.data.author,
+    publishedAt: post.data.publishedAt,
+    updatedAt: post.data.updatedAt,
+    image: fullCoverImage,
+    tags: post.data.tags,
+    publisherName: 'DevTools',
+  }),
+  generateBreadcrumbJsonLd([
+    { name: 'Home', url: `${siteUrl}${base}` },
+    { name: 'Blog', url: `${siteUrl}${base}blog/` },
+    { name: post.data.title, url: postUrl },
+  ]),
+]);
+---
+
+<ArticleLayout
+  title={post.data.title}
+  description={post.data.description}
+  author={post.data.author}
+  publishedAt={post.data.publishedAt}
+  updatedAt={post.data.updatedAt}
+  tags={post.data.tags}
+  relatedPosts={relatedPosts}
+  ogImage={coverImage}
+  jsonLd={jsonLd}
+>
+  <Content />
+</ArticleLayout>

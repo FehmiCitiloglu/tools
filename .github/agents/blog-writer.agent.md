@@ -2,7 +2,7 @@
 description: "Use when writing SEO-optimized blog posts, technical articles, tutorials, or guides for this Astro platform. Drafts MDX content for src/content/blog/ that follows the project's SEO, schema markup, and readability conventions. Do NOT use for developer tools, comparison pages, layout/navigation work, deployment, or analytics."
 name: "Blog Writer"
 tools: [read, search, edit, todo, execute]
-model: ["Claude Opus 4.7 (copilot)", "GPT-5 (copilot)"]
+model: ["Claude Opus 4.7 (copilot)", "GPT-5.5 (copilot)"]
 argument-hint: "Topic of the blog post (e.g. 'How to optimize MongoDB queries')"
 user-invocable: true
 ---
