@@ -7,8 +7,7 @@ import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://fehmicitiloglu.github.io',
-  base: '/tools',
+  site: 'https://tools.kaizokuoni.com',
   output: 'static',
   integrations: [react(), mdx(), sitemap()],
   vite: {
