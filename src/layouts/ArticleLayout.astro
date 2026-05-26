@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '@layouts/BaseLayout.astro';
+import AdSlot from '@components/ads/AdSlot.astro';
 
 export interface Props {
   title: string;
@@ -33,6 +34,7 @@ const dateFormatter = new Intl.DateTimeFormat('en', {
 
 const rawBase = import.meta.env.BASE_URL;
 const base = rawBase.endsWith('/') ? rawBase : `${rawBase}/`;
+const adBlogInArticleSlot = import.meta.env.PUBLIC_ADSENSE_SLOT_BLOG_INARTICLE;
 ---
 
 <BaseLayout
@@ -80,6 +82,15 @@ const base = rawBase.endsWith('/') ? rawBase : `${rawBase}/`;
     <div class="prose prose-gray max-w-none dark:prose-invert prose-pre:overflow-x-auto prose-a:text-blue-600 dark:prose-a:text-blue-400">
       <slot />
     </div>
+
+    {adBlogInArticleSlot && (
+      <AdSlot
+        slot={adBlogInArticleSlot}
+        format="fluid"
+        layout="in-article"
+        class="mx-auto my-6"
+      />
+    )}
 
     {relatedPosts.length > 0 && (
       <section class="space-y-4 border-t border-gray-200 pt-8 dark:border-gray-700" aria-labelledby="related-posts">

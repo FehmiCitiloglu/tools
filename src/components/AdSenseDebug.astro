@@ -1,0 +1,41 @@
+---
+/**
+ * Dev-only debug banner showing AdSense env var status.
+ * Only renders in local development (import.meta.env.DEV).
+ * Helps troubleshoot why ad slots aren't appearing locally.
+ */
+
+const isDev = import.meta.env.DEV;
+const adsenseClient = import.meta.env.PUBLIC_ADSENSE_CLIENT;
+const slotToolInArticle = import.meta.env.PUBLIC_ADSENSE_SLOT_TOOL_INARTICLE;
+const slotToolFooter = import.meta.env.PUBLIC_ADSENSE_SLOT_TOOL_FOOTER;
+const slotBlogInArticle = import.meta.env.PUBLIC_ADSENSE_SLOT_BLOG_INARTICLE;
+
+const vars = [
+  { name: 'PUBLIC_ADSENSE_CLIENT', value: adsenseClient },
+  { name: 'PUBLIC_ADSENSE_SLOT_TOOL_INARTICLE', value: slotToolInArticle },
+  { name: 'PUBLIC_ADSENSE_SLOT_TOOL_FOOTER', value: slotToolFooter },
+  { name: 'PUBLIC_ADSENSE_SLOT_BLOG_INARTICLE', value: slotBlogInArticle },
+];
+---
+
+{isDev && (
+  <div class="fixed bottom-4 right-4 z-50 max-w-sm bg-yellow-50 dark:bg-yellow-900 border-2 border-yellow-300 dark:border-yellow-700 rounded-lg p-3 text-xs font-mono shadow-lg">
+    <div class="font-bold text-yellow-900 dark:text-yellow-100 mb-2">
+      AdSense Debug (Dev Only)
+    </div>
+    <div class="space-y-1">
+      {vars.map((v) => (
+        <div class="flex justify-between gap-2">
+          <span class="text-yellow-800 dark:text-yellow-200 truncate">{v.name}</span>
+          <span class={v.value ? 'text-green-700 dark:text-green-300 font-bold' : 'text-red-700 dark:text-red-300'}>
+            {v.value ? 'set' : 'empty'}
+          </span>
+        </div>
+      ))}
+    </div>
+    <div class="text-yellow-700 dark:text-yellow-300 mt-2 text-[10px]">
+      Set vars in .env to see ad slots render.
+    </div>
+  </div>
+)}

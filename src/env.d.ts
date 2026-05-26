@@ -7,6 +7,8 @@ interface ImportMetaEnv {
   readonly PUBLIC_ADSENSE_SLOT_TOOL_INARTICLE?: string;
   /** AdSense slot ID for the footer unit on tool pages. */
   readonly PUBLIC_ADSENSE_SLOT_TOOL_FOOTER?: string;
+  /** AdSense slot ID for the in-article unit on blog posts. */
+  readonly PUBLIC_ADSENSE_SLOT_BLOG_INARTICLE?: string;
 }
 
 interface ImportMeta {

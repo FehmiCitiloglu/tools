@@ -35,7 +35,9 @@ jobs:
         env:
           NODE_ENV: production
           PUBLIC_ADSENSE_CLIENT: ${{ secrets.PUBLIC_ADSENSE_CLIENT }}
-          PUBLIC_ADSENSE_FOOTER_SLOT: ${{ secrets.PUBLIC_ADSENSE_FOOTER_SLOT }}
+          PUBLIC_ADSENSE_SLOT_TOOL_INARTICLE: ${{ secrets.PUBLIC_ADSENSE_SLOT_TOOL_INARTICLE }}
+          PUBLIC_ADSENSE_SLOT_TOOL_FOOTER: ${{ secrets.PUBLIC_ADSENSE_SLOT_TOOL_FOOTER }}
+          PUBLIC_ADSENSE_SLOT_BLOG_INARTICLE: ${{ secrets.PUBLIC_ADSENSE_SLOT_BLOG_INARTICLE }}
 
       - name: Build Pagefind index
         run: npx pagefind --site dist

@@ -33,6 +33,8 @@ const {
 
 const adsenseClient = import.meta.env.PUBLIC_ADSENSE_CLIENT;
 const adsEnabled = Boolean(adsenseClient);
+const isInArticleFluid = format === 'fluid' && layout === 'in-article';
+const adStyle = isInArticleFluid ? 'display:block; text-align:center;' : 'display:block';
 ---
 
 {adsEnabled && (
@@ -42,12 +44,12 @@ const adsEnabled = Boolean(adsenseClient);
   >
     <ins
       class="adsbygoogle block"
-      style="display:block"
+      style={adStyle}
       data-ad-client={adsenseClient}
       data-ad-slot={slot}
       data-ad-format={format}
       data-ad-layout={layout}
-      data-full-width-responsive={responsive ? 'true' : 'false'}
+      data-full-width-responsive={isInArticleFluid ? undefined : responsive ? 'true' : 'false'}
     ></ins>
     <script is:inline>
       (window.adsbygoogle = window.adsbygoogle || []).push({});
