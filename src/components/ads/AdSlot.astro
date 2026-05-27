@@ -33,13 +33,14 @@ const {
 
 const adsenseClient = import.meta.env.PUBLIC_ADSENSE_CLIENT;
 const adsEnabled = Boolean(adsenseClient);
+const isDev = import.meta.env.DEV;
 const isInArticleFluid = format === 'fluid' && layout === 'in-article';
 const adStyle = isInArticleFluid ? 'display:block; text-align:center;' : 'display:block';
 ---
 
 {adsEnabled && (
   <aside
-    class:list={['ad-slot block w-full overflow-hidden text-center', className]}
+    class:list={['ad-slot relative block w-full overflow-hidden text-center', isDev && 'min-h-32', className]}
     aria-label="Advertisement"
   >
     <ins
@@ -51,8 +52,29 @@ const adStyle = isInArticleFluid ? 'display:block; text-align:center;' : 'displa
       data-ad-layout={layout}
       data-full-width-responsive={isInArticleFluid ? undefined : responsive ? 'true' : 'false'}
     ></ins>
+    {isDev && (
+      <div class="dev-ad-placeholder pointer-events-none absolute inset-0 z-10 hidden min-h-32 items-center justify-center rounded-md border border-dashed border-yellow-300 bg-yellow-50/95 px-4 py-6 text-center text-xs text-yellow-900 dark:border-yellow-700 dark:bg-yellow-950/95 dark:text-yellow-100">
+        <div>
+          <div class="font-semibold">Ad slot rendered</div>
+          <div class="mt-1">
+            Google returned no local ad fill or the request was blocked. Slot {slot}.
+          </div>
+        </div>
+      </div>
+    )}
     <script is:inline>
       (window.adsbygoogle = window.adsbygoogle || []).push({});
     </script>
   </aside>
 )}
+
+<style>
+  .adsbygoogle:not([data-adsbygoogle-status]) + .dev-ad-placeholder,
+  .adsbygoogle[data-ad-status='unfilled'] + .dev-ad-placeholder {
+    display: flex;
+  }
+
+  .adsbygoogle[data-ad-status='filled'] + .dev-ad-placeholder {
+    display: none;
+  }
+</style>

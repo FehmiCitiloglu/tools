@@ -17,6 +17,8 @@ const vars = [
   { name: 'PUBLIC_ADSENSE_SLOT_TOOL_FOOTER', value: slotToolFooter },
   { name: 'PUBLIC_ADSENSE_SLOT_BLOG_INARTICLE', value: slotBlogInArticle },
 ];
+
+const allVarsSet = vars.every((v) => Boolean(v.value));
 ---
 
 {isDev && (
@@ -35,7 +37,9 @@ const vars = [
       ))}
     </div>
     <div class="text-yellow-700 dark:text-yellow-300 mt-2 text-[10px]">
-      Set vars in .env to see ad slots render.
+      {allVarsSet
+        ? 'Vars are set. Blank local ads usually mean AdSense returned no fill or was blocked.'
+        : 'Set missing vars in .env to render ad slots.'}
     </div>
   </div>
 )}
